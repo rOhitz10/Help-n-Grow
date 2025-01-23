@@ -1,0 +1,24 @@
+{
+ "version": 2,
+ "builds": [
+   {
+     "src": "backend/index.js",
+     "use": "@vercel/node"
+   }
+ ],
+ "routes": [
+   {
+     "src": "/(.*)",
+     "dest": "/backend/index.js"
+   }
+ ],
+ "env": {
+   "FRONTEND_URL": "https://help-n-grow-snowy.vercel.app",
+   "PORT": "4000",
+   "DB_CONNECTION_STRING": "mongodb+srv://helpngroww:JVR5FwYOlJ8uy6nc@cluster0.td9f1.mongodb.net/helpngrow"
+ }
+}
+
+
+
+
