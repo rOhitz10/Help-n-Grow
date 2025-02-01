@@ -15,4 +15,11 @@ export default defineConfig({
       },
     },
   },
+  css: {
+    preprocessorOptions: {
+      css: {
+        additionalData: `@import "@react-pdf-viewer/default-layout/lib/styles/index.css";`,
+      },
+    },
+  },
 })
