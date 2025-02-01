@@ -1,38 +1,3 @@
-// import React, { useState } from 'react';
-// import { Document, Page, pdfjs } from 'react-pdf';
-
-// // Set the worker source
-// pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
-
-// const Plan = () => {
-//   const [numPages, setNumPages] = useState(null);
-//   const [pageNumber, setPageNumber] = useState(1);
-
-//   const onDocumentLoadSuccess = ({ numPages }) => {
-//     setNumPages(numPages);
-//   };
-
-//   return (
-//     <div>
-//       <Document
-//         file="/HNG-Slides.pdf" // Ensure the file is in the `public` folder
-//         onLoadSuccess={onDocumentLoadSuccess}
-//         onLoadError={(error) => console.error("Document load error:", error)}
-//         onSourceError={(error) => console.error("Source error:", error)}
-//       >
-//         <Page pageNumber={pageNumber} />
-//       </Document>
-//       <p>
-//         Page {pageNumber} of {numPages || "?"}
-//       </p>
-//     </div>
-//   );
-// };
-
-// export default Plan;
-
-
-
 
 import  React from 'react';
 import { Viewer, Worker } from '@react-pdf-viewer/core';
