@@ -21,6 +21,13 @@ import ReceiveRequest from './Dashborad_Components/Sub_component/ReceiveRequest'
 import ForgotPassword from './Components/ForgotPassword';
 import ResetPassword from './Components/ResetPassword';
 
+// import { pdfjs } from 'react-pdf';
+
+// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+//   'pdfjs-dist/build/pdf.worker.min.mjs',
+//   // `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`,
+//   import.meta.url,
+// ).toString();
 
 function App() {
   return (
