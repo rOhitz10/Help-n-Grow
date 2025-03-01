@@ -1,6 +1,7 @@
 import React from 'react';
 import { GiSevenPointedStar } from "react-icons/gi";
 import image from '../../assets/funding.png';
+import { Link } from 'react-router-dom';
 
 function Hero1() {
   return (
@@ -19,9 +20,11 @@ world’s biggest affiliate
 network.
         </p>
         <div className="flex space-x-4">
+          <Link to="/signup">
           <button className="border-2 border-[#ff9a60] text-black font-bold py-2 px-6 rounded-xl transition-all duration-300 hover:bg-[#ff9a60] hover:text-white">
             Get Started
           </button>
+          </Link>
           <button className="bg-black text-white font-bold py-2 px-6 rounded-xl transition-all duration-300 hover:bg-[#ff9a60] hover:text-black">
             Learn More
           </button>

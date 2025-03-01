@@ -80,11 +80,11 @@ limitless possibilities.
                       to maximize the security of the service."
                     </p>
                    
-                      <div className="flex items-center space-x-4">
+                      {/* <div className="flex items-center space-x-4">
                         <div className="text-base font-medium text-gray-900">
                           Ranjan Soni, CEO 
                         </div>
-                      </div>
+                      </div> */}
                    
                   </div>
                    <svg
