@@ -3,6 +3,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { AiOutlineMail } from "react-icons/ai";
 import Helpngroww from '../assets/Helpngrowlogo.png'
 import { FaTwitter ,FaLinkedin ,FaInstagram,FaFacebookSquare} from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -42,17 +43,19 @@ function Footer() {
 
         <div className="mb-4 lg:mb-0">
           <ul className="p-4 flex flex-col gap-2">
-            <li className="font-bold text-xl">Company</li>
-            <li>About us</li>
+            <Link to="/" className="font-bold text-xl">Company</Link>
+            <Link to="/about">About us</Link>
             <li>Careers</li>
             <li>SiteMap</li>
           </ul>
         </div>
-
+      
         <div className="mb-4 lg:mb-0">
+          <Link to="/contact">
           <ul className="p-4 flex flex-col gap-2">
             <li className="font-bold text-xl">Contact Us</li>
           </ul>
+          </Link>
           <ul className="my-2 flex flex-row items-center gap-2">
             <IoLocationOutline size={20} />
             <li>Official Location</li>

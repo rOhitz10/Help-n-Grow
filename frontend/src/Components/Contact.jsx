@@ -16,8 +16,8 @@ function Contact() {
       {/* Contact Information Section */}
       <div className="flex flex-col md:flex-row justify-center items-center mb-12 space-y-6 md:space-y-0 md:space-x-12">
         {/* Address */}
-        <div className="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
-          <div className="text-orange-500">
+        {/* <div className="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4"> */}
+          {/* <div className="text-orange-500">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -37,7 +37,7 @@ function Contact() {
             <h3 className="font-bold text-lg">Our Office</h3>
             <p className="text-gray-600">1234 Business St, Suite 100<br />City, State, ZIP</p>
           </div>
-        </div>
+        </div> */}
 
         {/* Phone */}
         <div className="bg-white p-6 rounded-lg shadow-lg flex items-center space-x-4">
@@ -59,7 +59,7 @@ function Contact() {
           </div>
           <div>
             <h3 className="font-bold text-lg">Phone</h3>
-            <p className="text-gray-600">+1 (234) 567-890</p>
+            <p className="text-gray-600">9501317581</p>
           </div>
         </div>
 
@@ -83,7 +83,7 @@ function Contact() {
           </div>
           <div>
             <h3 className="font-bold text-lg">Email</h3>
-            <p className="text-gray-600">info@business.com</p>
+            <p className="text-gray-600">helpngrow.hng@gmail.com</p>
           </div>
         </div>
       </div>

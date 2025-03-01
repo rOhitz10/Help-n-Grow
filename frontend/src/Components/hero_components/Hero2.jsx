@@ -47,13 +47,10 @@ Choices
         </p>
       </div>
 
-      {/* Trusted Brands */}
-      <div className="flex flex-wrap justify-center gap-6">
-        
-      </div>
+
 
       {/* Reviews */}
-      <div className="my-12 mx-32 py-11 bg-gray-50 text-indigo-500 rounded-3xl flex flex-col gap-6 md:flex-row justify-center space-y-6 md:space-y-0 md:space-x-8">
+      <div className="my-12 mx-16 py-11  bg-gray-50 text-indigo-500 rounded-3xl flex flex-col gap-6 md:flex-row justify-center space-y-6 md:space-y-0 md:space-x-12">
         {/* Review 1 */}
         <div className="text-center">
           <div className="text-4xl font-bold">4.5</div>
