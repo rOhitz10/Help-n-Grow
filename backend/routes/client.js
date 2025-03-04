@@ -5,10 +5,10 @@ const router = express.Router();
 // Import controllers
 const { authMiddleware , isAdmin} = require("../middleWares/auth");
 
-const { createUserChain, getDownlines, getAllChildrenAndGrandchildren, getAllDownlineCount, getDownlinesCount, userUpdate, getUsersAtSameLevel, getUserWithActivateStatus, getActivateDownaline } = require("../controllers/chainController");
+const { createUserChain, getDownlines, getAllChildrenAndGrandchildren, getAllDownlineCount, getDownlinesCount, userUpdate, getUsersAtSameLevel, getUserWithActivateStatus, getActivateDownaline, profileUpdate } = require("../controllers/chainController");
 const { loginUser } = require("../controllers/loginController");
 const { generateEpins, getAllEpins } = require("../controllers/epinController");
-const { sendRequest, acceptRequest, rejectRequest, getRequests, mygetRequests, sendRequestToLeveledUpUser, clientFinancialDetails } = require("../controllers/requestController");
+const { sendRequest, acceptRequest, rejectRequest, getRequests, mygetRequests, sendRequestToLeveledUpUser, clientFinancialDetails, clientProfileDetails } = require("../controllers/requestController");
 const { getUsersByLevel, getUsersWhoLeveledUpByOne } = require("../controllers/levelController");
 const { totalGeneratedEpins, totalUsers } = require("../controllers/adminController");
 const { tokenResetLink, resetPassword } = require("../controllers/resetPassword");
@@ -36,10 +36,14 @@ router.get('/get-users-by-level', authMiddleware,getUsersByLevel)
 router.get('/get-first-levelledUp',authMiddleware,getUsersWhoLeveledUpByOne)
 router.put('/accept/:requestId', authMiddleware, acceptRequest); 
 router.put('/reject/:requestId', authMiddleware, rejectRequest); 
+
 router.put("/update-user", authMiddleware, userUpdate); 
+router.put("/update-profile", authMiddleware, profileUpdate); 
 
 // router.get('/get-activated-users',getUserWithActivateStatus)
 router.get('/get-financial-detail',authMiddleware,clientFinancialDetails)
+router.get('/get-profile-detail',authMiddleware,clientProfileDetails)
+
 router.get('/total-epins',authMiddleware,totalGeneratedEpins)
 router.get('/get-all-users',authMiddleware,totalUsers)
 router.get('/all-active-downline',authMiddleware,getActivateDownaline)

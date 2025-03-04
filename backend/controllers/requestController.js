@@ -379,11 +379,12 @@ exports.sendRequestToLeveledUpUser = async (req, res) => {
 
 exports.clientFinancialDetails = async(req,res) =>{
 
-    const  epin  = req.body.epin;
+    const  {epin}  = req.query;
+    
     
     try {
         
-        const client = await Client.findOne( epin ).select(
+        const client = await Client.findOne( {epin : epin} ).select(
           "number accountNo accountHolderName ifscCode bankName branchName googlePay phonePe"
         );
     
@@ -402,6 +403,38 @@ exports.clientFinancialDetails = async(req,res) =>{
             googlePay: client.googlePay,
             phonePe: client.phonePe,
           },
+        });
+      } catch (error) {
+       
+        
+        res.status(500).json({ message: "Error fetching client details", error });
+      }
+    };
+
+exports.clientProfileDetails = async(req,res) =>{
+
+    const { epin }  = req.query;
+    console.log(epin,"epin");
+    
+    try {
+        
+        const client = await Client.findOne( {epin : epin} ).select(
+          "name email city address state number"
+        );
+    
+        if (!client) {
+          return res.status(404).json({ message: "Client not found" });
+        }
+    
+        res.status(200).json({
+            name: client.name,
+            email: client.email,
+            number: client.number,
+            country : client.country,
+            city: client.city,
+            address: client.address,
+            state: client.state,
+            
         });
       } catch (error) {
        

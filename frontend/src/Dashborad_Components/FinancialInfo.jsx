@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
@@ -21,6 +21,8 @@ export default function FinancialInfo() {
   const sidebarRef = useRef(null); // Ref to track sidebar element
 
   const token = localStorage.getItem("token");
+  const epin = localStorage.getItem("epin");
+
 
   // Toggle sidebar visibility
   const handleClick = () => {
@@ -46,14 +48,18 @@ export default function FinancialInfo() {
   useEffect(() => {
     const fetchFinancialDetails = async () => {
       try {
-        const res = await axios.get("/api/v1/get-financial-detail", {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const res = await axios.get(`/api/v1/get-financial-detail`,
+         
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params:{epin},
           },
-        });
+      );
 
         // Log the response to verify its structure
-        console.log("Financial details response:", res.data);
+        
 
         // Ensure the response contains the expected fields
         if (res.data.financialDetails) {
@@ -78,7 +84,7 @@ export default function FinancialInfo() {
     };
 
     fetchFinancialDetails();
-  }, [token]);
+  }, []);
 
   // Handle change in input fields
   const handleChange = (e) => {
@@ -94,7 +100,7 @@ export default function FinancialInfo() {
       // Assuming EPIN is stored in token
       await axios.put(
         "/api/v1/update-user",
-        { ...formData },
+        { ...formData , epin: epin },
         {
           headers: {
             Authorization: `Bearer ${token}`,
