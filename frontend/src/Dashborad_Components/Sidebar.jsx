@@ -91,7 +91,7 @@ function Sidebar() {
 
         {isProfileOpen && (
           <div className="ml-4 my-2  space-y-8 text-sm text-white font-semibold">
-            <Link to="/dashboard/update-profile" >
+            <Link to="/dashboard/profile" >
             <div  className="p-2 shadow-xl rounded-lg hover:bg-slate-400 hover:text-black">My Profile</div>
             </Link>
             <Link to="/dashboard/financial-info">
