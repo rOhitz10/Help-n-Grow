@@ -217,7 +217,7 @@ exports.userUpdate = async (req, res) => {
    
     try {
         // Find the user by EPIN
-        const user = await clientModel.findOne({ epin });
+        const user = await clientModel.findOne({ epin : epin });
         if (!user) {
             return res.status(404).json({ msg: "User not found" });
         }
@@ -241,7 +241,43 @@ exports.userUpdate = async (req, res) => {
         return res.status(500).json({ msg: "An error occurred", error: error.message });
     }
 };
+exports.profileUpdate = async (req, res) => {
+    const  epin  = req.user.epin; // Assuming EPIN is stored in the token
+    const {
+        name,
+        email,
+        state,
+        city,
+        address,
+        number
+    } = req.body; // New fields to update
+  
+   
+    try {
+        // Find the user by EPIN
+        const user = await clientModel.findOne({ epin : epin });
+        if (!user) {
+            return res.status(404).json({ msg: "User not found" });
+        }
 
+        // Update the user's fields with the new data
+        if (name) user.name = name;
+        if (email) user.email = email;
+        if (state) user.state = state;
+        if (city) user.city = city;
+        if (address) user.address = address;
+        if (number) user.number = number;
+
+        // Save the updated user
+        const updatedUser = await user.save();
+        
+        return res.status(200).json({ msg: "Profile updated successfully", data: updatedUser });
+        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ msg: "An error occurred", error: error.message });
+    }
+};
 
 // exports.getUsersAtSameLevel = async (req, res) => {
 //     const userId = req.user.id;

@@ -20,14 +20,7 @@ import SendRequest from './Dashborad_Components/Sub_component/SendRequest'
 import ReceiveRequest from './Dashborad_Components/Sub_component/ReceiveRequest';
 import ForgotPassword from './Components/ForgotPassword';
 import ResetPassword from './Components/ResetPassword';
-
-// import { pdfjs } from 'react-pdf';
-
-// pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-//   'pdfjs-dist/build/pdf.worker.min.mjs',
-//   // `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`,
-//   import.meta.url,
-// ).toString();
+import UpdateProfile from './Dashborad_Components/updateProfile';
 
 function App() {
   return (
@@ -56,6 +49,7 @@ function App() {
 
           <Route path="/dashboard/recive/help" element={<ReceiveRequest/>} />
           <Route path="/dashboard/send/help" element={<SendRequest/>}/>
+          <Route path="/dashboard/update-profile" element={<UpdateProfile/>}/>
         </Route>
 
         {/* Protected Admin Dashboard Routes */}
