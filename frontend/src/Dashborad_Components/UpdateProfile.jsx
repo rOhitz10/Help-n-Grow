@@ -59,14 +59,11 @@ export default function UpdateProfile() {
   };
 
   // Handle state change
-  // const handleStateChange = (state) => {
-  //   setFormData({ ...formData, state: state.isoCode, city: "" });
-  //   setCities(City.getCitiesOfState(formData.country, state.isoCode)); // Get cities for the selected state
-  // };
   const handleStateChange = (state) => {
-   setFormData({ ...formData, state: state.isoCode, city: "" });
-   setCities(City.getCitiesOfState(formData.country, state.isoCode)); // Get cities for the selected state
- };
+    setFormData({ ...formData, state: state.isoCode, city: "" });
+    setCities(City.getCitiesOfState(formData.country, state.isoCode)); // Get cities for the selected state
+  };
+
  
  
   // handle city change 
