@@ -48,13 +48,13 @@ export default function FinancialInfo() {
   useEffect(() => {
     const fetchFinancialDetails = async () => {
       try {
-        const res = await axios.get(`/api/v1/get-financial-detail`,
+        const res = await axios.get(`/api/v1/get-financial-detail?epin=epin${epin}`,
          
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            params:{epin},
+            // params:{epin},
           },
       );
 

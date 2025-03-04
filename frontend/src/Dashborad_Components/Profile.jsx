@@ -41,12 +41,12 @@ export default function Profile() {
   useEffect(() => {
     const fetchProfileDetails = async () => {
       try {
-        const res = await axios.get("/api/v1/get-profile-detail",
+        const res = await axios.get(`/api/v1/get-profile-detail?epin=${epin}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
-            params:{epin},
+            // params:{epin},
           },  
       );
 
