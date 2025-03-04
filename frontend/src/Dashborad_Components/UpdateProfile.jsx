@@ -81,13 +81,13 @@ export default function UpdateProfile() {
         "/api/v1/update-profile", 
         {
           ...formData,  // Spread the formData
-          epin: epin,   // Add epin to the request body
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+             // Add epin to the request body
+         },
+         {
+           headers: {
+             Authorization: `Bearer ${token}`,
+           },
+         }
       );
 
       if (res.status === 200) {
