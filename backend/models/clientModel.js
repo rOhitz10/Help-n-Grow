@@ -13,10 +13,10 @@ const clientSchema = new mongoose.Schema({
     number: { type: Number, required: true },
     email: { type: String, required: true },
 
-    address : {type:String , required:true },
-    city : {type:String , required:true },
+    address : {type:String  },
+    city : {type:String  },
     country : {type:String  },
-    state : {type:String , required:true },
+    state : {type:String  },
     level: { type: Number, default: 0 },
     halt: {type:Boolean,default:false},
 
