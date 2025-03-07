@@ -13,6 +13,7 @@ export default function Profile() {
     contactNumber: "",
     city: "",
     state: "",
+    country:"",
   });
 
   const [menuBar, setMenuBar] = useState(false);
@@ -49,16 +50,17 @@ export default function Profile() {
             // params:{epin},
           },  
       );
-
+      
         if (res.data) {
-          const { name, email, address, contactNumber, city, state } = res.data;
+          const { name, email, address, number, city, state, country } = res.data;
           setFormData({
             name: name || "",          
             email: email || "", 
             address: address || "",  
-            contactNumber: contactNumber || "",  
+            contactNumber: number || "",  
             city: city || "",  
-            state: state || "",  
+            state: state || "", 
+            country: country || "", 
           });
         } else {
           console.error("Invalid response:", res.data);
@@ -93,7 +95,7 @@ export default function Profile() {
 
         <div className="flex justify-center items-center h-full">
           {/* Profile Form */}
-          <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-8 w-full max-w-md">
+          <div className="bg-gray-50 shadow-md rounded px-8 pt-6 pb-8 my-8 w-full max-w-md">
             <h2 className="text-xl text-center font-bold mb-4">Profile</h2>
 
             {/* Display Profile Info */}
@@ -113,15 +115,22 @@ export default function Profile() {
               <h1 className="block text-gray-700 text-sm font-bold mb-2">Contact Number: {formData.contactNumber}</h1>
             </div>
 
-            <div className="mb-4 md:flex md:items-center">
-              <div className="md:w-1/2">
+            <div className="mb-4">
+                <h1 className="block text-gray-700 text-sm font-bold mb-2">Country: {formData.country}</h1>
+              </div>
+
+           
+
+
+              <div className="mb-4">
+                <h1 className="block text-gray-700 text-sm font-bold mb-2">State: {formData.state}</h1>
+              </div>
+              
+              <div className="mb-4">
                 <h1 className="block text-gray-700 text-sm font-bold mb-2">City: {formData.city}</h1>
               </div>
 
-              <div className="md:w-1/2 md:pl-6">
-                <h1 className="block text-gray-700 text-sm font-bold mb-2">State: {formData.state}</h1>
-              </div>
-            </div>
+           
 
             {/* Update Profile Button */}
             <Link to="/dashboard/update-profile">

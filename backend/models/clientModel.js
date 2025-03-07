@@ -1,6 +1,7 @@
 // models/clientModel.js
 
 const Address = require("ipaddr.js");
+const { required } = require("joi");
 const mongoose = require("mongoose");
 const { level } = require("npmlog");
 
@@ -14,9 +15,9 @@ const clientSchema = new mongoose.Schema({
     email: { type: String, required: true },
 
     address : {type:String  },
-    city : {type:String  },
-    country : {type:String  },
-    state : {type:String  },
+    city : {type:String ,required:true },
+    country : {type:String , required:true },
+    state : {type:String  , required:true},
     level: { type: Number, default: 0 },
     halt: {type:Boolean,default:false},
 

@@ -1,4 +1,3 @@
-import React from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
 
@@ -10,7 +9,7 @@ function Contact() {
       {/* Header Section */}
       <div className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800">Contact Us</h1>
-        <p className="text-lg text-gray-600">We'd love to hear from you! Reach out to us anytime.</p>
+        <p className="text-lg text-gray-600">We love to hear from you! Reach out to us anytime.</p>
       </div>
 
       {/* Contact Information Section */}
@@ -89,7 +88,7 @@ function Contact() {
       </div>
 
       {/* Contact Form Section */}
-      <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg mb-12">
+      {/* <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg mb-12">
         <h3 className="text-2xl font-bold text-gray-800 mb-4">Send Us a Message</h3>
         <form>
           <div className="mb-4">
@@ -144,7 +143,7 @@ function Contact() {
             Send Message
           </button>
         </form>
-      </div>
+      </div> */}
 
       {/* Google Map Section */}
       <div className="max-w-7xl mx-auto">

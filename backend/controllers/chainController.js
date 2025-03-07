@@ -246,6 +246,7 @@ exports.profileUpdate = async (req, res) => {
     const {
         name,
         email,
+        country,
         state,
         city,
         address,
@@ -263,6 +264,8 @@ exports.profileUpdate = async (req, res) => {
         // Update the user's fields with the new data
         if (name) user.name = name;
         if (email) user.email = email;
+        if (country) user.country = country;
+        
         if (state) user.state = state;
         if (city) user.city = city;
         if (address) user.address = address;
