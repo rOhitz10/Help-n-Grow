@@ -1,10 +1,15 @@
-import { useEffect, useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FaArrowCircleRight } from 'react-icons/fa';
 import Sidebar from './Sidebar';
 import axios from 'axios';
-import { ToastContainer, toast } from "react-toastify"; // Import Toastify
-import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
-import { Country, State, City } from 'country-state-city';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {
+  CitySelect,
+  CountrySelect,
+  StateSelect,
+} from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
 
 export default function UpdateProfile() {
   const [formData, setFormData] = useState({
@@ -13,17 +18,16 @@ export default function UpdateProfile() {
     address: "",
     contactNumber: "",
     country: "",
-    city: "",
     state: "",
+    city: "",
   });
-
-  const [countries, setCountries] = useState(Country.getAllCountries());
-  const [states, setStates] = useState([]);
-  const [cities, setCities] = useState([]);
+  
+  const [countries, setCountries] = useState(null);
+  const [states, setStates] = useState(null);
+  const [cities, setCities] = useState(null);
   const [menuBar, setMenuBar] = useState(false);
-  const sidebarRef = useRef(null); 
+  const sidebarRef = useRef(null);
   const token = localStorage.getItem("token");
-  const epin = localStorage.getItem("epin");
 
   const handleClick = () => {
     setMenuBar(!menuBar);
@@ -51,51 +55,26 @@ export default function UpdateProfile() {
     }));
   };
 
-  // Handle country change
-  const handleCountryChange = (country) => {
-    setFormData({ ...formData, country: country.isoCode, state: "", city: "" });
-    setStates(State.getStatesOfCountry(country.isoCode)); // Get states for the selected country
-    setCities([]); // Clear cities
-  };
-
-  // Handle state change
-  const handleStateChange = (state) => {
-    setFormData({ ...formData, state: state.isoCode, city: "" });
-    setCities(City.getCitiesOfState(formData.country, state.isoCode)); // Get cities for the selected state
-  };
-
- 
- 
-  // handle city change 
-  // const handleCityChange =(city) => {
-  //  setFormData({ ...formData, city: city.isoCode, city: "" });
-  //  setCities(City.getCitiesOfState(formData.country, state.isoCode));
-  // }
-  
-
   // Handle save changes
   const handleSaveChanges = async (e) => {
-    e.preventDefault(); // Prevent page reload
+    e.preventDefault();
     try {
       const res = await axios.put(
         "/api/v1/update-profile", 
+        formData,
         {
-          ...formData,  // Spread the formData
-             // Add epin to the request body
-         },
-         {
-           headers: {
-             Authorization: `Bearer ${token}`,
-           },
-         }
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-
+      
       if (res.status === 200) {
-        toast.success("Profile updated successfully!"); // Success toast
+        toast.success("Profile updated successfully!");
       }
     } catch (error) {
       console.error("Failed to update profile", error);
-      toast.error("Failed to update profile. Please try again."); // Error toast
+      toast.error("Failed to update profile. Please try again.");
     }
   };
 
@@ -105,7 +84,6 @@ export default function UpdateProfile() {
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
-        newestOnTop={false}
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
@@ -133,12 +111,11 @@ export default function UpdateProfile() {
         <div className="flex justify-center items-center h-full">
           {/* Profile Form */}
           <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 my-8 w-full max-w-md">
-            <h2 className="text-xl text-center font-bold mb-4">Edit profile</h2>
+            <h2 className="text-xl text-center font-bold mb-4">Edit Profile</h2>
 
+            {/* Name */}
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
-                Name
-              </label>
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">Name</label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="name"
@@ -150,10 +127,9 @@ export default function UpdateProfile() {
               />
             </div>
 
+            {/* Email */}
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-                Email
-              </label>
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">Email</label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="email"
@@ -165,10 +141,9 @@ export default function UpdateProfile() {
               />
             </div>
 
+            {/* Address */}
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">
-                Address
-              </label>
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">Address</label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="address"
@@ -180,10 +155,9 @@ export default function UpdateProfile() {
               />
             </div>
 
+            {/* Contact Number */}
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="contactNumber">
-                Contact Number
-              </label>
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="contactNumber">Contact Number</label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="contactNumber"
@@ -195,81 +169,67 @@ export default function UpdateProfile() {
               />
             </div>
 
+            {/* Country */}
             <div className="mb-4 md:flex md:items-center">
               <div className="md:w-1/2">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="country">
-                  Country
-                </label>
-                <select
-                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                  id="country"
-                  name="country"
-                  value={formData.country}
-                  onChange={(e) => handleCountryChange(Country.getCountryByCode(e.target.value))}
-                >
-                  <option value="">Select Country</option>
-                  {countries.map((country) => (
-                    <option key={country.isoCode} value={country.isoCode}>
-                      {country.name}
-                    </option>
-                  ))}
-                </select>
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="country">Country</label>
+                <CountrySelect
+                  containerClassName="form-group"
+                  onChange={(country) => {
+                    setCountries(country);
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      country: country.name,
+                      state: "",
+                      city: "",
+                    }));
+                  }}
+                  placeHolder="Select Country"
+                />
               </div>
 
+              {/* State */}
               <div className="md:w-1/2 md:pl-6">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="state">
-                  State
-                </label>
-                <select
-                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                  id="state"
-                  name="state"
-                  value={formData.state}
-                  onChange={(e) => handleStateChange(State.getStateByCode(formData.country, e.target.value))}
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="state">State</label>
+                <StateSelect
                   disabled={!formData.country}
-                >
-                  <option value="">Select State</option>
-                  {states.map((state) => (
-                    <option key={state.isoCode} value={state.isoCode}>
-                      {state.name}
-                    </option>
-                  ))}
-                </select>
+                  countryid={countries?.id}
+                  containerClassName="form-group"
+                  onChange={(state) => {
+                    setStates(state);
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      state: state.name,
+                      city: "",
+                    }));
+                  }}
+                  placeHolder="Select State"
+                />
               </div>
             </div>
 
+            {/* City */}
             <div className="mb-4 md:flex md:items-center">
               <div className="md:w-1/2">
-                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">
-                  City
-                </label>
-                {/* <select
-                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                  id="city"
-                  name="city"
-                  value={formData.city}
-                  onChange={(e) => handleCityChange(city.getCityByCode(formData.state, e.target.value))}
+                <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">City</label>
+                <CitySelect
+                  countryid={countries?.id}
+                  stateid={states?.id}
+                  containerClassName="form-group"
+                  onChange={(city) => {
+                    setCities(city);
+                    setFormData((prevState) => ({
+                      ...prevState,
+                      city: city.name,
+                    }));
+                  }}
+                  placeHolder="Select City"
                   disabled={!formData.state}
-                > */}
-                  {/* <label value="">Select City</label> */}
-                  {/* {cities.map((city) => (
-                    <option key={city.isoCode} value={city.isoCode}>
-                      {city.name}
-                    </option>
-                  ))} */}
-                  <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="city"
-                name="city"
-                type="text"
-                placeholder="City"
-                value={formData.city}
-                onChange={handleChange}
-              />
-                {/* </select> */}
+                />
               </div>
             </div>
 
+            {/* Save Changes Button */}
             <button
               className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded w-full"
               onClick={handleSaveChanges}

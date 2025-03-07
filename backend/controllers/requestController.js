@@ -419,7 +419,7 @@ exports.clientProfileDetails = async(req,res) =>{
     try {
         
         const client = await Client.findOne( {epin : epin} ).select(
-          "name email city address state number"
+          "name email city address state number country"
         );
     
         if (!client) {

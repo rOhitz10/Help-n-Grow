@@ -13,3 +13,4 @@ const PrivateRoutes = () => {
 };
 
 export { PrivateRoutes, AdminRoute };
+
