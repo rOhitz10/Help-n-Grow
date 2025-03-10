@@ -55,7 +55,7 @@ function MyTeam() {
   }, [sponsorId]); // Run this effect when sponsorId changes
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (error) return <div>{error}:no downline found</div>;
 
   
  
@@ -93,11 +93,11 @@ function MyTeam() {
       <div className="flex-1 flex-col p-8 ">
       <h1 className="text-2xl font-semibold">My Team</h1>
 
-      {Data.map((data) => (
+      {Data.map((data) => 
        <div className="my-8">
         <UserCard  user={data} />
        </div>
-      ))}
+      )}
       </div>
 
    

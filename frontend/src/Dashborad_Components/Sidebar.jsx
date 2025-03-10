@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link} from "react-router-dom";
 import { IoHomeOutline } from "react-icons/io5";
 import { SlLogin } from "react-icons/sl";
@@ -11,6 +11,7 @@ import { FaArrowDownWideShort,FaArrowUpShortWide } from "react-icons/fa6";
 import { useAuth } from '../AuthContext';
 import {jwtDecode} from 'jwt-decode';
 import DP from './Sub_component/DP';
+
  
 
 const Card = ({icon, title, onClick}) => {
@@ -28,21 +29,23 @@ const Card = ({icon, title, onClick}) => {
 function Sidebar() {
   const [isProfileOpen, setProfileOpen] = useState(false);
   const { logout } = useAuth();
-  const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState("User"); // Fallback for userName
+
   const [role,setrole] = useState(true)
 
   const token = localStorage.getItem('token');
+  const storedUserData = localStorage.getItem('userData');
 
+ 
+    const userData = JSON.parse(storedUserData);
+ 
+  
 
   useEffect(() => {
     if (token) {
      
       try {
         const decoded = jwtDecode(token);
-     
-        setUserId(decoded.epin);
-        setUserName(decoded.name || "User"); // Use decoded userName or fallback
+
         if(decoded.role === 'admin'){
           setrole(true);
         }
@@ -70,15 +73,11 @@ function Sidebar() {
 
       <div className="bg-slate-300 rounded-xl p-3  space-x-4 ">
         <div className="flex items-center w-full cursor-pointer">
-          {/* <img
-            src="https://cdnb.artstation.com/p/assets/images/images/026/142/657/large/sleepy-jhin-roronoa-zoro-portrait.jpg?1587999560"
-            alt="Profile"
-            className="rounded-full w-10 h-10"
-            /> */}
+        
             <DP/>
           <div className=" mx-2">
-            <h3 className="text-sm font-semibold overflow-hidden ">{userName}</h3>
-            <p className="text-xs text-gray-600">{userId}</p>
+            <h3 className="text-sm font-semibold overflow-hidden ">{userData? userData.name:"user"}</h3>
+            <p className="text-xs text-gray-600">{userData.epin}</p>
           </div>
           <button
             className=" text-sm focus:outline-none bg-slate-400 rounded-md p-2"

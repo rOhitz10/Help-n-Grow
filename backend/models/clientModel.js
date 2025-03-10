@@ -15,9 +15,9 @@ const clientSchema = new mongoose.Schema({
     email: { type: String, required: true },
 
     address : {type:String  },
-    city : {type:String ,required:true },
-    country : {type:String , required:true },
-    state : {type:String  , required:true},
+    city : {type:String ,required:false },
+    country : {type:String , required:false},
+    state : {type:String  , required:false},
     level: { type: Number, default: 0 },
     halt: {type:Boolean,default:false},
 

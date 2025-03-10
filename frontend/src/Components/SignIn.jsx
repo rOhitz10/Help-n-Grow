@@ -30,7 +30,8 @@ const SignIn = () => {
 
     try {
       const res = await axios.post('/api/v1/user-login', { ...data });
-      login(res.data.token, res.data.user.epin);
+      login(res.data.token, res.data.user);
+      
     } catch (err) {
       const errorMessage = err.response?.data?.msg || 'Login failed. Please try again.';
       setError(errorMessage);
