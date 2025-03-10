@@ -1,10 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
-import { BsShieldLock } from 'react-icons/bs';
 import Sidebar from './Sidebar';
 import Header from './Header';
 import { FaArrowCircleRight } from 'react-icons/fa';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
+import {jwtDecode} from 'jwt-decode';
 
 const DashHome = () => {
   const { logout } = useAuth();
@@ -24,6 +24,26 @@ const DashHome = () => {
   const [menuBar, setMenuBar] = useState(false);
   const sponsorId = localStorage.getItem('epin');
   const textToCopy = `http://localhost:8000/r/signup/${sponsorId}`;
+  const [status,setStatus] = useState(false);
+  const token = localStorage.getItem('token');
+
+   useEffect(() => {
+      if (token) {
+       
+        try {
+          const decoded = jwtDecode(token);
+  
+          if(decoded.status === true){
+            setStatus("Active");
+          }
+          else{
+            setStatus("Deactive")
+          }
+        }  catch (error) {
+          console.error("Failed to decode token:", error);
+        }
+      }
+    }, []);
 
   const handleCopy = async () => {
     try {
@@ -177,7 +197,7 @@ const DashHome = () => {
 
             <div className="bg-white p-4 rounded-lg shadow-md text-center">
               <h2 className="text-sm text-gray-500">CURRENT STATUS</h2>
-              <span className="text-xl font-semibold text-blue-500">{data.currentStatus}</span>
+              <span className="text-xl font-semibold text-blue-500">{status}</span>
             </div>
           </div>
 

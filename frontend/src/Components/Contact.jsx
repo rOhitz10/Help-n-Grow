@@ -1,5 +1,6 @@
 import Navbar from './Navbar'
 import Footer from './Footer'
+import Logo from '../assets/Logo.png'
 
 function Contact() {
   return (
@@ -8,9 +9,13 @@ function Contact() {
      <div className="bg-gray-100 min-h-screen p-8">
       {/* Header Section */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-gray-800">Contact Us</h1>
+        <h1 className="text-6xl font-bold text-gray-800">Contact Us</h1>
         <p className="text-lg text-gray-600">We love to hear from you! Reach out to us anytime.</p>
       </div>
+
+      <div className="flex justify-center ">
+          <img className="w-72" src={Logo} alt="logo" />
+        </div>
 
       {/* Contact Information Section */}
       <div className="flex flex-col md:flex-row justify-center items-center mb-12 space-y-6 md:space-y-0 md:space-x-12">
@@ -86,65 +91,8 @@ function Contact() {
           </div>
         </div>
       </div>
-
-      {/* Contact Form Section */}
-      {/* <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg mb-12">
-        <h3 className="text-2xl font-bold text-gray-800 mb-4">Send Us a Message</h3>
-        <form>
-          <div className="mb-4">
-            <label className="block text-gray-600 mb-2" htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Your Name"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-600 mb-2" htmlFor="subject">Subject</label>
-            <input
-              type="text"
-              id="subject"
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Subject"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-600 mb-2" htmlFor="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Your Email"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-600 mb-2" htmlFor="number">Number</label>
-            <input
-              type="text"
-              id="number"
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Your Number"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-600 mb-2" htmlFor="message">Message</label>
-            <textarea
-              id="message"
-              className="w-full p-2 border border-gray-300 rounded"
-              placeholder="Your Message"
-              rows="4"
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-orange-500 text-white p-2 rounded hover:bg-orange-600"
-          >
-            Send Message
-          </button>
-        </form>
-      </div> */}
-
+      
+    
       {/* Google Map Section */}
       <div className="max-w-7xl mx-auto">
         <iframe

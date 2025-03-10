@@ -1,19 +1,21 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { FaRegUser } from "react-icons/fa";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiLogoutCircleRLine } from "react-icons/ri";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoNotifications } from "react-icons/io5";
 import Notifications from './Sub_component/Notificaion';
 import DP from './Sub_component/DP';
 
-function Header({ id, name, dp }) {
-  const { sponsorId } = useParams();
+function Header() {
   const [profile, setProfile] = useState(false);
   const [notify, setNotify] = useState(false);
   
   const notifyRef = useRef(null);  // Reference for the notifications dropdown
   const profileRef = useRef(null);  // Reference for the profile dropdown
+
+  const storeData = localStorage.getItem('userData');
+  const userData = JSON.parse(storeData);
   
   // Toggle notification menu
   const handleNotifyToggle = useCallback(() => {
@@ -45,6 +47,10 @@ function Header({ id, name, dp }) {
   return (
     <div className="py-4 flex justify-end items-center border-b-2 relative">
       {/* Notifications Icon and Dropdown */}
+      <div className='text-xl font-semibold'>
+        <h1>My Level: {userData.level}</h1>
+      </div>
+
       <div className="mx-6 relative notification-icon" onClick={handleNotifyToggle}>
         <IoNotifications size={30} />
         {notify && (
