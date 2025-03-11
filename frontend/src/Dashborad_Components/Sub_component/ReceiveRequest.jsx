@@ -37,7 +37,7 @@ function ReceiveRequest() {
         const response = await axios.get('/api/v1/my-requests', {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
-        console.log(response,"res");
+       
         
         const requestsData = response.data.data;
         setRequests(requestsData);
