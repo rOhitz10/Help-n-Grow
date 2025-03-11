@@ -43,11 +43,12 @@ useEffect(() => {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
       });
       
-      if (ans.data.data) {
-        setSendData(ans.data.data); // Or ans.data.data if you need the full array
+      if (ans.data.data.length > 0 ) {
+        setSendData(ans.data.data[0]); 
       } else {
-        setSendData(null); // No data for sending requests
+        setSendData(ans.data.data); 
       }
+      console.log(ans.data.data.length ,"idddd");
       
       // setSendError(null); // Reset error state on success
     } catch (error) {

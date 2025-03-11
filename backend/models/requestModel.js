@@ -1,5 +1,6 @@
 // models/requestModel.js
 
+const { number } = require('joi');
 const mongoose = require('mongoose');
 
 const requestSchema = new mongoose.Schema({
@@ -11,7 +12,8 @@ const requestSchema = new mongoose.Schema({
         default: 'pending', // default to 'pending' status
     },
     createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
+    updatedAt: { type: Date, default: Date.now },
+    level:{ type:Number }
 });
 
 const RequestModel = mongoose.model('Request', requestSchema);
