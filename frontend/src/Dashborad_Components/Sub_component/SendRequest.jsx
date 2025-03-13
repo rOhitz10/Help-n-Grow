@@ -120,10 +120,20 @@ useEffect(() => {
       {/* Sidebar */}
       <div
         ref={sidebarRef}
-        className={`fixed top-0 left-0 w-60 transition-transform duration-300 ease-in-out transform lg:translate-x-0 ${menuBar ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed top-0 left-0 w-60 h-screen bg-white z-30 transition-transform duration-300 ease-in-out transform ${
+          menuBar ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0`}
       >
         <Sidebar />
       </div>
+
+      {/* Overlay for Mobile */}
+      {menuBar && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
+          onClick={handleClick} // Close sidebar when clicking outside
+        />
+      )}
 
       {/* Main content */}
       <div className="flex-1 lg:ml-60">

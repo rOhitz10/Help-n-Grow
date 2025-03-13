@@ -8,6 +8,7 @@ import { LiaSignOutAltSolid } from "react-icons/lia";
 import { FaHandsHelping } from "react-icons/fa";
 import { GrSend } from "react-icons/gr";
 import { FaArrowDownWideShort,FaArrowUpShortWide } from "react-icons/fa6";
+import { FaRegUser } from "react-icons/fa";
 import { useAuth } from '../AuthContext';
 import {jwtDecode} from 'jwt-decode';
 import DP from './Sub_component/DP';
@@ -95,9 +96,7 @@ function Sidebar() {
             </Link>
             <Link to="/dashboard/financial-info">
             <div  className="p-2 shadow-xl rounded-lg hover:bg-slate-400 hover:text-black">Financial </div>
-            </Link>
-            {/* <div className="px-2 border-2 rounded-lg hover:bg-slate-500 hover:text-blue-600">Password</div> */}
-           
+            </Link>           
           </div>
         )}
       </div>
@@ -105,7 +104,7 @@ function Sidebar() {
       <div className="w-full space-y-4">
         { role &&
           <Link to="/admin/dashboard">
-          <Card icon={<IoHomeOutline className="text-lg" />} title="Admin Panel" />
+          <Card icon={ <FaRegUser className="text-lg" />} title="Admin Panel" />
         </Link>
         }
         <h2 className="text-xs font-semibold text-gray-500 px-4">MAIN</h2>
