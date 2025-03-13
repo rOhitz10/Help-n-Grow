@@ -4,35 +4,86 @@ import Sidebar from './Sidebar';
 import Header from './Header';
 import axios from 'axios';
 import { useAuth } from '../AuthContext';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const LevelCard = ({ node, grandChildCount, onClick }) => {
+const LevelCard = ({ node, onClick }) => {
   const { name, epin, children } = node;
+  const scrollContainerRef = useRef(null);
+  const [showLeftButton, setShowLeftButton] = useState(false);
+  const [showRightButton, setShowRightButton] = useState(true);
+
+  const handleScroll = (scrollOffset) => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: scrollOffset, behavior: 'smooth' });
+    }
+  };
+
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setShowLeftButton(scrollLeft > 0);
+      setShowRightButton(scrollLeft < scrollWidth - clientWidth);
+    }
+  };
 
   return (
-    <div className="flex justify-center items-center border-2 shadow-lg px-2 min-w-full h-52 cursor-pointer" onClick={() => onClick(node)}>
-      <div>
-        <div className="flex flex-col justify-center items-center rounded-full p-4 mx-4">
-          <span className="flex justify-center items-center bg-green-500 text-white rounded-full p-4">
-            <FaUserCircle size={40} />
-          </span>
-          <h2>{name}</h2>
-          <p className="text-center">{epin}</p>
-        </div> 
+    <div className="flex justify-center items-center border-2 shadow-lg py-2 cursor-pointer">
+      {/* Parent Node */}
+      <div className="flex flex-col justify-center items-center rounded-full p-2">
+        <span className="flex justify-center items-center bg-green-500 text-white rounded-full p-4">
+          <FaUserCircle size={40} />
+        </span>
+        <h2 className="text-center">{name}</h2>
+        <p className="text-center">{epin}</p>
       </div>
 
-      <div className={`flex mx-4 ${children.length > 3 ? 'overflow-x-scroll rounded-lg shadow-md scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200' : ''} w-[85%]`}>
-        {children.length > 0 ? (
-          children.map((child) => (
-            <div className="flex flex-col mx-8 justify-center items-center" key={child._id} onClick={(e) => { e.stopPropagation(); onClick(child); }}>
-              <span className="flex justify-center items-center bg-green-400 text-white rounded-full p-4">
-                <FaUserCircle size={40} />
-              </span>
-              <h1>{child.name}</h1>
-              <h1>{child.epin}</h1>
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-500 p-4">No children</p>
+      {/* Children Nodes with Scroll Buttons */}
+      <div className="relative w-full md:min-w-56 mt-4">
+        {showLeftButton && (
+          <button
+            className="absolute -left-5 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 rounded-full p-2 z-10"
+            onClick={() => handleScroll(-200)}
+          >
+            <FaChevronLeft size={20} />
+          </button>
+        )}
+
+        <div
+          ref={scrollContainerRef}
+          className="flex overflow-x-auto scroll-smooth scrollbar-hide"
+          onScroll={checkScroll}
+        >
+          <div className="flex flex-row space-x-4 px-4 py-2">
+            {children.length > 0 ? (
+              children.map((child) => (
+                <div
+                  className="flex flex-col justify-center items-center min-w-[120px]"
+                  key={child._id}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onClick(child);
+                  }}
+                >
+                  <span className="flex justify-center items-center bg-green-400 text-white rounded-full p-4">
+                    <FaUserCircle size={40} />
+                  </span>
+                  <h1 className="text-center">{child.name}</h1>
+                  <h1 className="text-center">{child.epin}</h1>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-500 p-4">No children</p>
+            )}
+          </div>
+        </div>
+
+        {showRightButton && (
+          <button
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-75 rounded-full p-2 shadow-md z-10"
+            onClick={() => handleScroll(200)}
+          >
+            <FaChevronRight size={20} />
+          </button>
         )}
       </div>
     </div>
@@ -43,16 +94,17 @@ function LevelTree() {
   const [menuBar, setMenuBar] = useState(false);
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedNode, setSelectedNode] = useState(null); // Store selected node for modal
-  const [isModalOpen, setIsModalOpen] = useState(false); // Track modal open/close state
+  const [selectedNode, setSelectedNode] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef(null);
   const sidebarRef = useRef(null);
   const { logout } = useAuth();
 
-  const handleClick = () => setMenuBar(!menuBar);
+  const handleClick = () => {
+    setMenuBar((prev) => !prev); // Toggle the menuBar state
+  };
 
   const handleOutsideClick = (event) => {
-    // Close modal if clicked outside of the modal
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       closeModal();
     }
@@ -96,20 +148,35 @@ function LevelTree() {
 
   const openModal = (node) => {
     setSelectedNode(node);
-    setIsModalOpen(true); // Open modal
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Close modal
+    setIsModalOpen(false);
     setSelectedNode(null);
   };
 
   return (
     <div className="flex min-h-screen">
-      <div ref={sidebarRef} className={`fixed top-0 left-0 w-60 transition-transform duration-300 ease-in-out transform lg:translate-x-0 ${menuBar ? 'translate-x-0' : '-translate-x-full'}`}>
+      {/* Sidebar */}
+      <div
+        ref={sidebarRef}
+        className={`fixed top-0 left-0 w-60 h-screen bg-white z-30 transition-transform duration-300 ease-in-out transform ${
+          menuBar ? 'translate-x-0' : '-translate-x-full'
+        } lg:translate-x-0`}
+      >
         <Sidebar />
       </div>
 
+      {/* Overlay for Mobile */}
+      {menuBar && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-20 lg:hidden"
+          onClick={handleClick} // Close sidebar when clicking outside
+        />
+      )}
+
+      {/* Main Content */}
       <div className="flex-1 lg:ml-60">
         <button className="absolute m-4 rounded-full z-20 lg:hidden" onClick={handleClick}>
           <FaArrowCircleRight size={30} className={`transition-transform duration-300 ${menuBar ? 'hidden' : ''}`} />
@@ -119,7 +186,7 @@ function LevelTree() {
 
         <div className="p-6">
           <h1 className="text-2xl font-semibold mb-8">Level Tree</h1>
-          <div className="flex space-x-4 mb-6">
+          <div className="flex flex-wrap gap-4 mb-6">
             <input
               type="text"
               placeholder="Search by epin or name..."
@@ -127,22 +194,21 @@ function LevelTree() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500 w-full md:w-64"
             />
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md flex items-center">
               <FaSearch className="inline mr-2" />
               Search
             </button>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md" onClick={() => setSearchQuery('')}>
+            <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-md flex items-center" onClick={() => setSearchQuery('')}>
               <FaRedoAlt className="inline mr-2" />
               Reset
             </button>
           </div>
 
-          {/* Modal for selected node */}
           {isModalOpen && (
             <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
               <div
                 ref={modalRef}
-                className="bg-white p-8 rounded-md shadow-lg w-96 transform transition-all duration-300 ease-in-out scale-95 opacity-0 animate-modal-open"
+                className="bg-white p-8 rounded-md shadow-lg w-11/12 md:w-96 transform transition-all duration-300 ease-in-out scale-95 opacity-0 animate-modal-open"
               >
                 <button
                   className="absolute top-2 right-2 text-gray-500 text-2xl hover:text-gray-700"
@@ -155,7 +221,6 @@ function LevelTree() {
                 <p><strong>Children:</strong> {selectedNode.children ? selectedNode.children.length : 0}</p>
                 <p><strong>Grandchildren:</strong> {countGrandChildren(selectedNode)}</p>
 
-                {/* Display children in the modal */}
                 {selectedNode.children && selectedNode.children.length > 0 && (
                   <div className="mt-4">
                     <h3 className="font-semibold">Children:</h3>
@@ -172,7 +237,6 @@ function LevelTree() {
           )}
         </div>
 
-        {/* Render the filtered data */}
         {filteredData.map((node) => (
           <LevelCard key={node._id} node={node} grandChildCount={countGrandChildren(node)} onClick={openModal} />
         ))}

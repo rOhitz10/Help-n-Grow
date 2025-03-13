@@ -45,7 +45,7 @@ function Header() {
   }, [handleClickOutside]);
 
   return (
-    <div className="py-4 flex justify-end items-center border-b-2 relative">
+    <div className="py-4 flex justify-end items-center border-b-2">
       {/* Notifications Icon and Dropdown */}
       <div className='text-xl font-semibold'>
         <h1>My Level: {userData.level}</h1>

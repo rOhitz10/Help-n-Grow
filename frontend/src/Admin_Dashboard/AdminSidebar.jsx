@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link, useParams } from "react-router-dom";
-import { IoHomeOutline, IoTicketOutline } from "react-icons/io5";
+import { IoHomeOutline} from "react-icons/io5";
 import { SlLogin } from "react-icons/sl";
 import { ImTree } from "react-icons/im";
 import { FaMapPin } from "react-icons/fa6";
-import { BsShieldLock } from "react-icons/bs";
-import { FaKeycdn } from "react-icons/fa6";
-import { GiNewspaper } from "react-icons/gi";
+import { FaRegUser } from "react-icons/fa";
 import { LiaSignOutAltSolid } from "react-icons/lia";
 import { useAuth } from "../AuthContext";
 
@@ -46,7 +44,7 @@ function AdminSidebar() {
         {/* <h2 className="text-xs font-semibold text-gray-500 px-4 uppercase">Main</h2> */}
         {isAdmin && 
         <Link to={`/dashboard`}>
-        <Card icon={<IoHomeOutline className="text-lg" />} title="User Panel" />
+        <Card icon={<FaRegUser  className="text-lg" />} title="User Panel" />
       </Link>
         }
         <Link to={"/admin/dashboard"}>
