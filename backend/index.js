@@ -32,7 +32,9 @@ const PORT = process.env.PORT || 5000;
 // Import and initialize database connection
 try {
   const dbConnection = require("./config/database");
-  dbConnection();
+  dbConnection().catch((err) => {
+    console.error("Database connection failed:", err.message);
+  });
 } catch (err) {
   console.error("Database connection failed:", err.message);
 }
@@ -52,15 +54,15 @@ app.get("*", (req, res) => {
   res.sendFile(path.resolve(_dirname, "frontend", "dist", "index.html"));
 });
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is listening at port ${PORT}`);
-});
+// Vercel invokes the exported Express application as a serverless function.
+module.exports = app;
 
-// Default route (optional; for debugging or basic info)
-app.get("/", (req, res) => {
-  res.send("Default Router for home screen");
-});
+// Keep a local HTTP listener only when this file is run directly.
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Server is listening at port ${PORT}`);
+  });
+}
 
 
 
