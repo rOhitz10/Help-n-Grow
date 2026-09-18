@@ -31,7 +31,8 @@ exports.tokenResetLink = async (req,res) => {
        
 
         const emailTitle  = " Password Reset Link From Help N Groww"
-        const url = `http://localhost:3000/reset/password/${token}`
+        const frontendUrl = (process.env.FRONTEND_URL || "http://localhost:5173").replace(/\/$/, "");
+        const url = `${frontendUrl}/reset/password/${token}`
         await sendMail(email , emailTitle , `click on link to reset your Password ${url}`)
 
         return res.status(200).json({

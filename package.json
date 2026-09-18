@@ -189,7 +189,7 @@
   "deploy": "npm run build && vercel deploy" 
 },
   "engines": {
-    "node": ">=16.0.0 <20.0.0"
+    "node": "22.x"
   },
   "keywords": [],
   "author": "",
